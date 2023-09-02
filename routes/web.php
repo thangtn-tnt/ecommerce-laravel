@@ -24,14 +24,11 @@ Route::get('/dashboard', function () {
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    // Admin Routes
+    Route::get('/admin/logout', [AdminController::class, 'destroy'])->name('admin.logout');
+    Route::get('/admin/profile', [AdminController::class, 'profile'])->name('admin.profile');
+    Route::get('/admin/edit/profile', [AdminController::class, 'edit'])->name('edit.profile');
+    Route::post('/admin/edit/profile', [AdminController::class, 'store'])->name('store.profile');
 });
 
-// Admin All Route
-Route::controller(AdminController::class)->group(function(){
-    Route::get('/admin/logout', 'destroy')->name('admin.logout');
-});
-
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';
